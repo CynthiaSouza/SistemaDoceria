@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class DoceriaNossoDoce implements Doceria {
     private Map<String, Estoque> doces;
@@ -18,15 +19,24 @@ public class DoceriaNossoDoce implements Doceria {
         return true;
     }
 
+    // Sem Streams
+//    @Override
+//    public Collection<Estoque> pesquisaDoce(String nome) {
+//        List<Estoque> pesquisados = new ArrayList<>();
+//        for (Estoque doce : doces.values()) {
+//            if (doce.getNome().equalsIgnoreCase(nome)) {
+//                pesquisados.add(doce);
+//            }
+//        }
+//        return pesquisados;
+//    }
+
+    // Com Streams
     @Override
     public Collection<Estoque> pesquisaDoce(String nome) {
-        List<Estoque> pesquisados = new ArrayList<>();
-        for (Estoque doce : doces.values()) {
-            if (doce.getNome().equalsIgnoreCase(nome)) {
-                pesquisados.add(doce);
-            }
-        }
-        return pesquisados;
+        return doces.values().stream()
+                .filter(doce -> doce.getNome().equalsIgnoreCase(nome))
+                .collect(Collectors.toList());
     }
 
     @Override
